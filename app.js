@@ -24,6 +24,8 @@ app.use('/tweet', tweetRoutes);
 
 // put middleware to grab userid here
 
+Tweet.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
+
 async function assertDatabaseConnection() {
   try {
     await sequelize.authenticate();
