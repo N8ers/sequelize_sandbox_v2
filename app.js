@@ -7,6 +7,7 @@ const sequelize = require('./database/index');
 
 // import models here
 const User = require('./models/user');
+const Tweet = require('./models/tweet');
 
 const PORT = 3000;
 
@@ -16,8 +17,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
 const userRoutes = require('./routes/user');
+const tweetRoutes = require('./routes/tweet');
 
 app.use('/user', userRoutes);
+app.use('/tweet', tweetRoutes);
 
 // put middleware to grab userid here
 
