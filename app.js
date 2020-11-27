@@ -30,8 +30,6 @@ async function assertDatabaseConnection() {
   try {
     await sequelize.authenticate();
     console.log('db authentication successful');
-    await sequelize.sync({ force: true });
-    console.log('sync successful');
   } catch (error) {
     console.log('db authentication failed: \n ', error.message);
     process.exit(1);
