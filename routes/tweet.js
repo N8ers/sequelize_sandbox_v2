@@ -20,4 +20,9 @@ router.post('/createTweet', async (req, res) => {
   res.status(200).json(tweet);
 });
 
+router.put('/deleteTweet', async (req, res) => {
+  const deletedTweet = await Tweet.destroy({ where: tweetId = req.body });
+  res.status(200).json(deletedTweet);
+});
+
 module.exports = router;
