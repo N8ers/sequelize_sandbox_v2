@@ -15,4 +15,10 @@ router.post('/createUser', async (req, res) => {
   res.status(200).json(user);
 });
 
+router.put('/deleteUser', async (req, res) => {
+  console.log('req.body ', req.body);
+  const deletedUser = await User.destroy({ where: id = req.body });
+  res.status(200).json(deletedUser);
+});
+
 module.exports = router;
