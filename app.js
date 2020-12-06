@@ -6,8 +6,8 @@ const bodyParser = require('body-parser');
 const sequelize = require('./database/index');
 
 // import models here
-const User = require('./models/user');
-const Tweet = require('./models/tweet');
+const User = require('./models/user.js');
+const Tweet = require('./models/tweet.js');
 
 const PORT = 3000;
 

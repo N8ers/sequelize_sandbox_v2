@@ -1,15 +1,25 @@
-const Sequelize = require('sequelize');
+/* eslint-disable linebreak-style */
 
-const sequelize = require('../database/index');
+const {
+  Model,
+} = require('sequelize');
 
-const Tweet = sequelize.define('tweet', {
-  id: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-    allowNull: false,
-    primaryKey: true,
-  },
-  content: Sequelize.STRING,
-});
-
-module.exports = Tweet;
+module.exports = (sequelize, DataTypes) => {
+  class Tweet extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
+    }
+  }
+  Tweet.init({
+    content: DataTypes.STRING,
+  }, {
+    sequelize,
+    modelName: 'Tweet',
+  });
+  return Tweet;
+};
