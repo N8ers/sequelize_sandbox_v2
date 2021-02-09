@@ -15,4 +15,4 @@ try {
   console.log('connection bad ', error);
 }
 
-// Up Next: Model Instances
+// Up Next: Finders
