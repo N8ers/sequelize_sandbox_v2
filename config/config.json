@@ -1,0 +1,23 @@
+{
+  "development": {
+    "database": "sequelize_sandbox_v3",
+    "username": "postgres",
+    "password": "2345",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "test": {
+    "database": "sequelize_sandbox_v3",
+    "username": "postgres",
+    "password": "2345",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "production": {
+    "database": "sequelize_sandbox_v3",
+    "username": "postgres",
+    "password": "2345",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}
