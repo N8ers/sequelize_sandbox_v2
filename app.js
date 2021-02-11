@@ -30,14 +30,13 @@ const Tweet = sequelize.define('Tweet', {
 // create Tweet
 app.post('/createTweet', async (req, res) => {
   const { creator, content } = req.body;
-  const tweet = await Tweet.create({ creator, content });
-  res.send('Tweet created! \n', tweet);
+  Tweet.create({ creator, content })
+    .then((tweet) => res.json(tweet));
 });
 
 // list all tweets
 app.get('/allTweets', async (req, res) => {
-  const tweets = await Tweet.findAll();
-  res.send('All tweets: ', tweets);
+  Tweet.findAll().then((tweets) => res.json(tweets));
 });
 
 app.get('/', (req, res) => {
