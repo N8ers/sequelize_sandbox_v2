@@ -17,14 +17,31 @@ const sequelize = new Sequelize({
 });
 
 const Tweet = sequelize.define('Tweet', {
-  creator: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
   content: {
     type: DataTypes.STRING,
     allowNull: false,
   },
+});
+
+const User = sequelize.define('User', {
+  userName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+});
+
+User.hasMany(Tweet);
+Tweet.belongsTo(User);
+
+// create User
+app.post('/createUser', async (req, res) => {
+  User.create({ userName: req.body.userName })
+    .then((user) => res.json(user));
+});
+
+// list all Users
+app.get('/listUsers', async (req, res) => {
+  User.findAll().then((users) => res.json(users));
 });
 
 // create Tweet
