@@ -8,7 +8,9 @@
     "dev": "nodemon app.js",
     "lint": "./node_modules/.bin/eslint ./",
     "forceSync": "node ./scripts/forceSync",
-    "generateMirgationSkeleton": "npx sequelize-cli migration:generate --name migration-skeleton"
+    "generateMirgationSkeleton": "npx sequelize-cli migration:generate --name migration-skeleton",
+    "migrate-up": "npx sequelize-cli db:migrate",
+    "migrate-down": "npx sequelize-cli db:migrate:undo"
   },
   "author": "",
   "license": "ISC",
