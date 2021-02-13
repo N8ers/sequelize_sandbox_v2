@@ -33,6 +33,13 @@ const User = sequelize.define('User', {
 User.hasMany(Tweet);
 Tweet.belongsTo(User, { foreignKey: 'id' });
 
+Tweet.associate = () => {
+  Tweet.belongsTo(User, {
+    foreignKey: 'id',
+    as: 'Creator',
+  });
+};
+
 // create User
 app.post('/createUser', async (req, res) => {
   User.create({ userName: req.body.userName })
