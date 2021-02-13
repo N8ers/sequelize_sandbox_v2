@@ -17,28 +17,57 @@ const sequelize = new Sequelize({
 });
 
 const Tweet = sequelize.define('Tweet', {
-  content: {
-    type: DataTypes.STRING,
+  id: {
     allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+    type: Sequelize.INTEGER,
+  },
+  creator_id: {
+    type: Sequelize.STRING,
+  },
+  content: {
+    type: Sequelize.STRING,
+  },
+  createdAt: {
+    allowNull: false,
+    type: Sequelize.DATE,
+  },
+  updatedAt: {
+    allowNull: false,
+    type: Sequelize.DATE,
   },
 });
 
 const User = sequelize.define('User', {
+  id: {
+    allowNull: false,
+    primaryKey: true,
+    type: Sequelize.DataTypes.UUID,
+    defaultValue: Sequelize.UUIDV4,
+  },
   userName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  createdAt: {
+    allowNull: false,
+    type: Sequelize.DATE,
+  },
+  updatedAt: {
+    allowNull: false,
+    type: Sequelize.DATE,
+  },
 });
 
-User.hasMany(Tweet);
-Tweet.belongsTo(User, { foreignKey: 'id' });
+// User.hasMany(Tweet);
 
-Tweet.associate = () => {
-  Tweet.belongsTo(User, {
-    foreignKey: 'id',
-    as: 'Creator',
-  });
-};
+// Tweet.associate = () => {
+//   Tweet.belongsTo(User, {
+//     foreignKey: 'id',
+//     as: 'Creator',
+//   });
+// };
 
 // create User
 app.post('/createUser', async (req, res) => {
