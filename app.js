@@ -1,6 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const express = require('express');
 const bodyParser = require('body-parser');
+const uuid = require('uuid/v4');
 
 const PORT = 3000;
 const app = express();
@@ -14,6 +15,27 @@ const sequelize = new Sequelize({
   password: '2345',
   host: 'localhost',
   dialect: 'postgres',
+});
+
+const User = sequelize.define('User', {
+  id: {
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+    type: Sequelize.INTEGER,
+  },
+  userName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
 });
 
 const Tweet = sequelize.define('Tweet', {
@@ -30,60 +52,36 @@ const Tweet = sequelize.define('Tweet', {
     type: Sequelize.STRING,
   },
   createdAt: {
-    allowNull: false,
-    type: Sequelize.DATE,
+    type: DataTypes.DATE,
+    allowNull: true,
   },
   updatedAt: {
-    allowNull: false,
-    type: Sequelize.DATE,
+    type: DataTypes.DATE,
+    allowNull: true,
   },
 });
-
-const User = sequelize.define('User', {
-  id: {
-    allowNull: false,
-    primaryKey: true,
-    type: Sequelize.DataTypes.UUID,
-    defaultValue: Sequelize.UUIDV4,
-  },
-  userName: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  createdAt: {
-    allowNull: false,
-    type: Sequelize.DATE,
-  },
-  updatedAt: {
-    allowNull: false,
-    type: Sequelize.DATE,
-  },
-});
-
-// User.hasMany(Tweet);
-
-// Tweet.associate = () => {
-//   Tweet.belongsTo(User, {
-//     foreignKey: 'id',
-//     as: 'Creator',
-//   });
-// };
 
 // create User
 app.post('/createUser', async (req, res) => {
+  if (!req.body.userName) {
+    res.json({ error: 'userName is required' });
+  }
   User.create({ userName: req.body.userName })
-    .then((user) => res.json(user));
+    .then((user) => res.json(user))
+    .catch((error) => res.json({ error }));
 });
 
 // list all Users
 app.get('/listUsers', async (req, res) => {
-  User.findAll().then((users) => res.json(users));
+  User.findAll()
+    .then((users) => res.json(users))
+    .catch((error) => res.json({ error }));
 });
 
 // create Tweet
 app.post('/createTweet', async (req, res) => {
-  const { creator, content } = req.body;
-  Tweet.create({ creator, content })
+  const { creator_id, content } = req.body;
+  Tweet.create({ creator_id, content })
     .then((tweet) => res.json(tweet));
 });
 
