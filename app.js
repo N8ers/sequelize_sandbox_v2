@@ -1,7 +1,6 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize, DataTypes, QueryTypes } = require('sequelize');
 const express = require('express');
 const bodyParser = require('body-parser');
-const uuid = require('uuid/v4');
 
 const PORT = 3000;
 const app = express();
@@ -47,6 +46,7 @@ const Tweet = sequelize.define('Tweet', {
   },
   creator_id: {
     type: Sequelize.STRING,
+    allowNull: false,
   },
   content: {
     type: Sequelize.STRING,
@@ -81,6 +81,9 @@ app.get('/listUsers', async (req, res) => {
 // create Tweet
 app.post('/createTweet', async (req, res) => {
   const { creator_id, content } = req.body;
+  if (!req.body.userName || !req.body.creator_id) {
+    res.json({ error: 'userName and creatorId are required' });
+  }
   Tweet.create({ creator_id, content })
     .then((tweet) => res.json(tweet));
 });
@@ -88,6 +91,22 @@ app.post('/createTweet', async (req, res) => {
 // list all tweets
 app.get('/allTweets', async (req, res) => {
   Tweet.findAll().then((tweets) => res.json(tweets));
+});
+
+app.delete('/removeAllTweets', async (req, res) => {
+  Tweet.destroy({
+    truncate: true,
+  })
+    .then(() => res.send('ok'))
+    .catch((error) => res.send(error));
+});
+
+app.delete('/removeAllUsers', async (req, res) => {
+  User.destroy({
+    truncate: true,
+  })
+    .then(() => res.send('ok'))
+    .catch((error) => res.send(error));
 });
 
 app.get('/', (req, res) => {
