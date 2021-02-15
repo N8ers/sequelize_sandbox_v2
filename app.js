@@ -61,6 +61,9 @@ const Tweet = sequelize.define('Tweet', {
   },
 });
 
+Tweet.belongsTo(User);
+User.hasMany(Tweet);
+
 app.post('/createUser', async (req, res) => {
   if (!req.body.userName) {
     res.json({ error: 'userName is required' });
