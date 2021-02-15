@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes, QueryTypes } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -61,7 +61,6 @@ const Tweet = sequelize.define('Tweet', {
   },
 });
 
-// create User
 app.post('/createUser', async (req, res) => {
   if (!req.body.userName) {
     res.json({ error: 'userName is required' });
@@ -71,14 +70,12 @@ app.post('/createUser', async (req, res) => {
     .catch((error) => res.json({ error }));
 });
 
-// list all Users
 app.get('/listUsers', async (req, res) => {
   User.findAll()
     .then((users) => res.json(users))
     .catch((error) => res.json({ error }));
 });
 
-// create Tweet
 app.post('/createTweet', async (req, res) => {
   const { creator_id, content } = req.body;
   if (!req.body.userName || !req.body.creator_id) {
@@ -88,7 +85,6 @@ app.post('/createTweet', async (req, res) => {
     .then((tweet) => res.json(tweet));
 });
 
-// list all tweets
 app.get('/allTweets', async (req, res) => {
   Tweet.findAll().then((tweets) => res.json(tweets));
 });
