@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { User, Tweet } = require('./models');
 
 router.post('/createUser', async (req, res) => {
   if (!req.body.userName) {
@@ -25,7 +26,9 @@ router.post('/createTweet', async (req, res) => {
 });
 
 router.get('/allTweets', async (req, res) => {
-  Tweet.findAll().then((tweets) => res.json(tweets));
+  Tweet.findAll()
+    .then((tweets) => res.json(tweets))
+    .catch((err) => res.send('ERROR: ', err));
 });
 
 router.delete('/removeAllTweets', async (req, res) => {

@@ -1,5 +1,12 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const { sequelize } = require('./db');
+
+const sequelize = new Sequelize({
+  database: 'sequelize_sandbox_v3',
+  username: 'postgres',
+  password: '2345',
+  host: 'localhost',
+  dialect: 'postgres',
+});
 
 const User = sequelize.define('User', {
   id: {
@@ -49,4 +56,4 @@ const Tweet = sequelize.define('Tweet', {
 Tweet.belongsTo(User);
 User.hasMany(Tweet);
 
-export { User, Tweet };
+module.export = { User, Tweet, sequelize };
