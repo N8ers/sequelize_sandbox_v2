@@ -85,8 +85,8 @@ app.get('/listUsers', async (req, res) => {
 
 app.post('/createTweet', async (req, res) => {
   const { creator_id, content } = req.body;
-  if (!req.body.userName || !req.body.creator_id) {
-    res.json({ error: 'userName and creatorId are required' });
+  if (!req.body.creator_id) {
+    res.json({ error: 'creatorId are required' });
   }
   Tweet.create({ creator_id, content })
     .then((tweet) => res.json(tweet));
